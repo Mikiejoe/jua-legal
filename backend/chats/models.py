@@ -8,12 +8,9 @@ class Chat(models.Model):
     def __str__(self):
         return self.user.username
      
-class Message(models.Model):
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
-    sender = models.CharField(max_length=100)
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
+class ModelMessage(models.Model):
+    role = models.CharField(max_length=100)
+    parts = models.TextField()
+     
     def __str__(self):
         return self.message

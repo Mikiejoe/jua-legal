@@ -4,30 +4,27 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework import status
 
-from .models import Chat, Message
-from .serializers import ChatSerializer, MessageSerializer
+from .models import Chat, ModelMessage
+from .serializers import ChatSerializer, ModelMessageSerializer
+
 class ChatViewSet(ModelViewSet):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
     permission_classes = [IsAuthenticated]
 
-    @action(detail=True, methods=['get'])
-    def messages(self, request, pk=None):
+    @action(detail=True, methods=['POST'])
+    def add_message(self, request, pk=None):
         chat = self.get_object()
-        messages = Message.objects.filter(chat=chat)
-        serializer = MessageSerializer(messages, many=True)
-        return Response(serializer.data)
+        message = ModelMessage.objects.create(
+            role=request.data.get('role'),
+            parts=request.data.get('parts')
+        )
+        chat.messages.add(message)
+        return Response(status=status.HTTP_201_CREATED)
 
-    @action(detail=True, methods=['post'])
-    def send_message(self, request, pk=None):
+    @action(detail=True, methods=['GET'])
+    def get_messages(self, request, pk=None):
         chat = self.get_object()
-        data = request.data
-        data['chat'] = chat.id
-        serializer = MessageSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        messages = chat.messages.all()
+        serializer = ModelMessageSerializer(messages, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

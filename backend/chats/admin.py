@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Chat, Message
+from .models import Chat, ModelMessage
 
 class ChatAdmin(admin.ModelAdmin):
     list_display = ['user', 'created_at', 'updated_at']
@@ -7,8 +7,8 @@ class ChatAdmin(admin.ModelAdmin):
     
 admin.site.register(Chat, ChatAdmin)
 
-class MessageAdmin(admin.ModelAdmin):
-    list_display = ['chat', 'sender', 'message', 'created_at', 'updated_at']
+class ModelMessageAdmin(admin.ModelAdmin):
+    list_display = ['role', 'parts']
     
     
-admin.site.register(Message, MessageAdmin)
+admin.site.register(ModelMessage,ModelMessageAdmin)
