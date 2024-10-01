@@ -1,0 +1,8 @@
+export {default as HomePage } from './Homepage'
+export {default as About } from './About'
+export {default as Login } from './Login'
+export {default as SignUp } from './SignUp'
+export {default as ChatPage } from './ChatPage'
+export {default as LandingPage} from './LandingPage'
+export {default as Contact} from './Contact'
+export {default as NotFound} from './NotFound'
