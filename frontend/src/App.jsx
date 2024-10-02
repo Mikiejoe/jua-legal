@@ -9,6 +9,7 @@ import {
   LandingPage,
   Contact,
   NotFound,
+  Confirm,
 } from "./pages";
 import { PrivateRoute, PublicRoute } from "./routes";
 
@@ -25,19 +26,9 @@ function App() {
               </PublicRoute>
             }
           />
-          <Route
-            path="/about"
-            element={
-                <About />
-            }
-          />
+          <Route path="/about" element={<About />} />
 
-          <Route
-            path="/contact"
-            element={
-                <Contact />
-            }
-          />
+          <Route path="/contact" element={<Contact />} />
 
           <Route
             path="/login"
@@ -55,6 +46,7 @@ function App() {
               </PublicRoute>
             }
           />
+          <Route path="/confirm" element={<Confirm />} />
           <Route
             path="/home"
             element={

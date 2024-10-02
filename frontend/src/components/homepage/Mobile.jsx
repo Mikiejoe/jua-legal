@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdAdd, MdChat, MdPerson, MdSearch, MdSettings } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-
-const messages = [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+import { BASE_URL } from "../../constants";
 
 function Mobile() {
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ function Mobile() {
 
   const createChat = async () => {
     const token = localStorage.getItem("token");
-    const devurl = "http://127.0.0.1:8000/api/v1/chats/";
+    const devurl = `${BASE_URL}/api/v1/chats/`;
 
     console.log(token);
     try {
@@ -34,7 +33,7 @@ function Mobile() {
   };
   const getChats = async () => {
     const token = localStorage.getItem("token");
-    const devurl = "http://127.0.0.1:8000/api/v1/chats/";
+    const devurl = `${BASE_URL}/api/v1/chats/`;
     try {
       const res = await fetch(devurl, {
         method: "GET",

@@ -8,6 +8,7 @@ import {
   MdSend,
   MdSettings,
 } from "react-icons/md";
+import { BASE_URL } from "../../constants";
 
 import ChatScreen from "./ChatScreen";
 
@@ -21,11 +22,10 @@ function Desktop() {
   const [count, setCount] = useState(0);
 
   const fetchUserData = async () => {
-    const produrl = "https://fololimo-api.onrender.com/api/v1/users/login/";
-    const devurl = "http://127.0.0.1:8000/api/v1/users/user/";
+    const devurl = `${BASE_URL}/api/v1/users/auth/user/`;
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(devurl, {
+      const res = await fetch(produrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -36,6 +36,7 @@ function Desktop() {
         const data = await res.json();
         console.log(data);
         setUsername(data.username);
+        localStorage.setItem("user",data)
         setEmail(data.email);
       }
     } catch (error) {
@@ -60,7 +61,7 @@ function Desktop() {
 
   const getChats = async () => {
     const token = localStorage.getItem("token");
-    const devurl = "http://127.0.0.1:8000/api/v1/chats/";
+    const devurl = `${BASE_URL}/api/v1/chats/`;
     try {
       const res = await fetch(devurl, {
         method: "GET",
@@ -89,7 +90,7 @@ function Desktop() {
 
   const createChat = async () => {
     const token = localStorage.getItem("token");
-    const devurl = "http://127.0.0.1:8000/api/v1/chats/";
+    const devurl = `${BASE_URL}/api/v1/chats/`;
 
     console.log(token);
     try {

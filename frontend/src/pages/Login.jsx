@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input, Button } from "../components";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../constants";
 
 function Login() {
   const navigate = useNavigate()
@@ -25,8 +26,8 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(null);
-    const produrl = "https://fololimo-api.onrender.com/api/v1/users/login/";
-    const devurl = "http://127.0.0.1:8000/api/v1/users/login/";
+    console.log('logging in')
+    const devurl = `${BASE_URL}/api/v1/users/login/`;
     try {
       const res = await fetch(devurl, {
         method: "POST",
@@ -38,7 +39,8 @@ function Login() {
       console.log(res);
       if (!res.ok) {
         const errorData = await res.json();
-        setError(errorData.message || "An error occurred");
+        console.log(errorData);
+        setError(errorData.non_field_errors[0] || "An error occurred");
       } else {
         console.log("Login successful");
         const data = await res.json()

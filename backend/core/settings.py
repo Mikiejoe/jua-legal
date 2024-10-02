@@ -112,13 +112,13 @@ if "test" in sys.argv:
 
 if DEVELOPMENT_MODE:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = False
+    # ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = False
     ACCOUNT_EMAIL_VERIFICATION = "optional"
 
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     ACCOUNT_EMAIL_REQUIRED = True
-    ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+    # ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
     ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 REST_FRAMEWORK = {

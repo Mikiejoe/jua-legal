@@ -1,59 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ChatCard from "./ChatCard";
+//
 
-const user = "mike";
-const messages = [
-  {
-    sender: "mike",
-    message: "Hello there",
-  },
-  {
-    sender: "john",
-    message: "I am good",
-  },
-  {
-    sender: "mike",
-    message: "nice to hear that!!",
-  },
-  {
-    sender: "john",
-    message:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt omnis delectus fugiat, minima iste accusantium aliquam saepe voluptates, nemo voluptatum sapiente quis inventore neque deleniti unde reiciendis impedit voluptate odit?",
-  },
-  {
-    sender: "mike",
-    message:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt omnis delectus fugiat, minima iste accusantium aliquam saepe voluptates, nemo voluptatum sapiente quis inventore neque deleniti unde reiciendis impedit voluptate odit?",
-  },
-  {
-    sender: "mike",
-    message: "Hello there",
-  },
-  {
-    sender: "john",
-    message: "I am good",
-  },
-  {
-    sender: "mike",
-    message: "nice to hear that!!",
-  },
-  {
-    sender: "john",
-    message:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt omnis delectus fugiat, minima iste accusantium aliquam saepe voluptates, nemo voluptatum sapiente quis inventore neque deleniti unde reiciendis impedit voluptate odit?",
-  },
-  {
-    sender: "mike",
-    message:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt omnis delectus fugiat, minima iste accusantium aliquam saepe voluptates, nemo voluptatum sapiente quis inventore neque deleniti unde reiciendis impedit voluptate odit?",
-  },
-];
+import { BASE_URL } from "../../constants";
 
 function ChatScreen({ pk }) {
   const [chats, setChats] = useState([]);
   const getChats = async () => {
     const token = localStorage.getItem("token");
-    const devurl = `http://127.0.0.1:8000/api/v1/chats/${pk}/get_messages`;
+    const devurl = `${BASE_URL}/api/v1/chats/${pk}/get_messages/`;
     try {
       const res = await fetch(devurl, {
         method: "GET",
@@ -65,7 +20,7 @@ function ChatScreen({ pk }) {
       console.log(res)
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        console.log("chats ",data);
         setChats(data);
       } else {
         setChats([])
