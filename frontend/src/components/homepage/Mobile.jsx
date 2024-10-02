@@ -9,6 +9,21 @@ function Mobile() {
     navigate(`chats/${id}`);
   };
   const [chats, setChats] = useState([]);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const humanFriendlyDate = date.toLocaleString("en-US", {
+      // weekday: 'long', // "Monday"
+      year: "numeric", // "2024"
+      month: "long", // "June"
+      day: "numeric", // "3"
+      hour: "numeric", // "9"
+      minute: "numeric", // "13"
+      second: "numeric", // "36"
+      hour12: true, // "AM/PM"
+    });
+    return humanFriendlyDate;
+  };
 
   const createChat = async () => {
     const token = localStorage.getItem("token");
@@ -88,15 +103,8 @@ function Mobile() {
               <MdPerson size={48} />
             </div>
             <div className="flex flex-col justify-start">
-              <h2 className="font-bold text-gray-600">{Date(chats.created_at)}</h2>
-              <p className="line-clamp-2 text-[12px] text-gray-500 font-">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-                provident nisi quo doloribus animi libero minus quae sint sunt
-                soluta voluptatem, sit ducimus voluptas fugit ex neque, laborum,
-                aut cum porro in numquam? Perspiciatis soluta reprehenderit at
-                commodi. Nulla tempore non vero voluptatum et porro nisi nobis
-                natus suscipit similique?
-              </p>
+              <h2 className="font-bold text-gray-600">{formatDate(chats.created_at)}</h2>
+              
             </div>
           </div>
         ))}
