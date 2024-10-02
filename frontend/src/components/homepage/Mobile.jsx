@@ -43,9 +43,14 @@ function Mobile() {
         },
       });
       if (res) {
-        const data = await res.json();
-        console.log(data);
-        setChats(data);
+        if (res.status === 401) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        } else {
+          const data = await res.json();
+          console.log(data);
+          setChats(data);
+        }
       } else {
         console.log("Error getting chats!!");
       }

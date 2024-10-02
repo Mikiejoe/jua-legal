@@ -20,6 +20,7 @@ function Desktop() {
   const [pk, setPk] = useState(null);
   const [chats, setChats] = useState([]);
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const fetchUserData = async () => {
     const devurl = `${BASE_URL}/api/v1/users/auth/user/`;
@@ -32,12 +33,17 @@ function Desktop() {
           Authorization: `Token ${token}`,
         },
       });
-      if (res) {
-        const data = await res.json();
-        console.log(data);
-        setUsername(data.username);
-        localStorage.setItem("user",data)
-        setEmail(data.email);
+      if (res.ok) {
+        if (res.status === 401) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        } else {
+          const data = await res.json();
+          console.log(data);
+          setUsername(data.username);
+          localStorage.setItem("user", data);
+          setEmail(data.email);
+        }
       }
     } catch (error) {
       console.log("Something went wrong");
@@ -70,15 +76,22 @@ function Desktop() {
           Authorization: `Token ${token}`,
         },
       });
-      if (res) {
-        const data = await res.json();
-        console.log(data);
-        setChats(data);
+      if (res.ok) {
+        if (res.status === 401) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        } else {
+          const data = await res.json();
+          console.log(data);
+          setChats(data);
+        }
       } else {
         console.log("Error getting chats!!");
       }
     } catch (error) {
       console.log("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,7 +117,7 @@ function Desktop() {
       if (res.ok) {
         const data = await res.json();
         console.log(data);
-        setCount((prev) => prev++);
+        setCount(count + 1);
         console.log(count);
       }
     } catch (error) {
@@ -201,27 +214,40 @@ function Desktop() {
         {/* NavBar */}
 
         <div className="grid grid-cols-3">
-          <div className="px-2 col-span-1 pt-2 overflow-y-scroll h-[90vh]">
-            {chats.map((i, n) => (
-              <div
-                key={n}
-                onClick={() => {
-                  setPk(i.id);
-                }}
-                className="b-red-500 p-2 mb-1 flex items-center space-x-2 bg-gray-100 hover:bg-slate-200 rounded-lg"
-              >
-                <div className="bg-slate-400 h-12 w-12 text-slate-200 border border-white flex items-center justify-center rounded-full">
-                  <MdPerson size={48} />
-                </div>
-                <div className="flex flex-col justify-start">
-                  <h2 className="font-bold text-gray-600">
-                    {" "}
-                    {formatDate(i.created_at)}{" "}
-                  </h2>
-                </div>
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <p className="h-full w-full flex items-center justify-center">
+              Loading...
+            </p>
+          ) : (
+            <div className="px-2 col-span-1 pt-2 overflow-y-scroll h-[90vh]">
+              {chats.length === 0 ? (
+                <p className="h-full w-full flex items-center justify-center">
+                  No chats available
+                </p>
+              ) : (
+                chats.map((i, n) => (
+                  <div
+                    key={n}
+                    onClick={() => {
+                      setPk(i.id);
+                    }}
+                    className="b-red-500 p-2 mb-1 flex items-center space-x-2 bg-gray-100 hover:bg-slate-200 rounded-lg"
+                  >
+                    <div className="bg-slate-400 h-12 w-12 text-slate-200 border border-white flex items-center justify-center rounded-full">
+                      <MdPerson size={48} />
+                    </div>
+                    <div className="flex flex-col justify-start">
+                      <h2 className="font-bold text-gray-600">
+                        {" "}
+                        {formatDate(i.created_at)}{" "}
+                      </h2>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
           <div className="col-span-2 bg-slate-300 relative w-full  h-[90.6vh]">
             {pk === null ? (
               <p className="h-full w-full flex items-center justify-center">

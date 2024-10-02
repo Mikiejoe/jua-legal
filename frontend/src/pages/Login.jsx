@@ -47,7 +47,7 @@ function Login() {
         console.log(data)
         localStorage.setItem("token",data.key)
         
-        navigate("/home")
+        window.location.reload()
       }
     } catch (error) {
       setError("Something went wrong!!!");
