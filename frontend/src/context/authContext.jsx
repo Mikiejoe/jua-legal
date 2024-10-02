@@ -13,10 +13,10 @@ export const AuthProvider = ({ children }) => {
   const logout = () => setIsAuthenticated(false);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("token");
     if (storedUser) {
       setIsAuthenticated(true);
-      setUser(JSON.parse(storedUser));
+      // setUser(JSON.parse(storedUser));
     }
   }, []);
 

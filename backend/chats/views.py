@@ -21,10 +21,30 @@ class ChatViewSet(ModelViewSet):
         )
         chat.messages.add(message)
         return Response(status=status.HTTP_201_CREATED)
-
+    
+    def create(self, request, *args, **kwargs):
+        user = request.user
+        data = {
+            "user": user.pk
+        }
+        serializer = ChatSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        
+        return Response(serializer.errors)
+    
+    def retrieve(self, request, *args, **kwargs):
+        chats = Chat.objects.filter(user=request.user.pk)
+        serializer = ChatSerializer(chats)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    
     @action(detail=True, methods=['GET'])
     def get_messages(self, request, pk=None):
         chat = self.get_object()
-        messages = chat.messages.all()
+        # messages = chat.messages.all()
+        messages = ModelMessage.objects.filter(chat=pk)
         serializer = ModelMessageSerializer(messages, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    

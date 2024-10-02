@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django.contrib.sites',
+    "django.contrib.sites",
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",
     "users",
     "chats",
-    "lawyers"    
+    "lawyers",
 ]
 
 SITE_ID = 1
@@ -57,12 +57,12 @@ CORS_ALLOWED_ORIGINS = [
     "https://fololimo-api.onrender.com",
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            BASE_DIR / "templates"
-        ],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -109,18 +109,30 @@ if "test" in sys.argv:
         "NAME": ":memory:",
     }
 
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
 
 if DEVELOPMENT_MODE:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = False
+    ACCOUNT_EMAIL_VERIFICATION = "optional"
 
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    
-    
-    
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+    ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "USER_DETAILS_SERIALIZER": "users.serializers.UserDetailsSerializer",
+}
+
+
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
