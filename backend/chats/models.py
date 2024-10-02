@@ -10,7 +10,7 @@ class Chat(models.Model):
      
 class ModelMessage(models.Model):
     role = models.CharField(max_length=100)
-    parts = models.TextField()
+    parts = models.JSONField()
     chat = models.ForeignKey(Chat,on_delete=models.CASCADE,blank=True,null=True)
      
     def __str__(self):

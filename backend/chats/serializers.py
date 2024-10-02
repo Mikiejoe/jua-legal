@@ -10,6 +10,15 @@ class ChatSerializer(serializers.ModelSerializer):
 
 
 class ModelMessageSerializer(serializers.ModelSerializer):
+    chat = serializers.PrimaryKeyRelatedField(queryset=Chat.objects.all())
+
+    class Meta:
+        depth = 1
+        model = ModelMessage
+        fields = ["role", "parts", "chat"]
+
+
+class ModelMessageSerializer1(serializers.ModelSerializer):
     class Meta:
         model = ModelMessage
         fields = ["role", "parts"]
