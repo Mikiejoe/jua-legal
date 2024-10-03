@@ -23,10 +23,10 @@ function Desktop() {
   const [loading, setLoading] = useState(true);
 
   const fetchUserData = async () => {
-    const devurl = `${BASE_URL}/api/v1/users/auth/user/`;
+    const devurl = `${BASE_URL}/api/v1/users/user/`;
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(produrl, {
+      const res = await fetch(devurl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ function Desktop() {
         }
       }
     } catch (error) {
-      console.log("Something went wrong");
+      console.log(error);
     }
   };
   const formatDate = (dateString) => {

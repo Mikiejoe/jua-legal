@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef} from "react";
 import ChatCard from "./ChatCard";
 //
 
 import { BASE_URL } from "../../constants";
 
-function ChatScreen({ pk }) {
+function ChatScreen({ pk,count }) {
+  const chatContainerRef = useRef(null);
   const [chats, setChats] = useState([]);
   const getChats = async () => {
     const token = localStorage.getItem("token");
@@ -33,9 +34,10 @@ function ChatScreen({ pk }) {
 
   useEffect(() => {
     getChats();
-  }, []);
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [count]);
   return (
-    <div className="px-4 h-[84vh] md:h-[82.6vh] overflow-y-auto">
+    <div ref={chatContainerRef} className="px-4 h-[80vh] md:h-[82.6vh] overflow-y-auto">
       <div className="p-2"></div>
 
       {chats.map((chat, index) => (

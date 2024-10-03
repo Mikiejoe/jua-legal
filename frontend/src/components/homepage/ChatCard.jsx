@@ -1,6 +1,15 @@
 import React from "react";
 
 function ChatCard({ message, sender }) {
+  const formatResponse = (text) => {
+    if (typeof text !== 'string') {
+      text = String(text); // Convert to string if not already
+    }
+    const formattedText = text
+      .replace(/\n/g, '<br />')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    return { __html: formattedText };
+  };
   return (
     <div className={`w-full mb-3 flex ${
           sender === "user" ?"justify-end":"rounded-bl-none"}`}>
@@ -9,7 +18,7 @@ function ChatCard({ message, sender }) {
           sender === "user" ?"rounded-br-none bg-slate-500":"rounded-bl-none text-slate-200 bg-slate-700"}`}
       >
         
-        <p >{message}</p>
+        <p dangerouslySetInnerHTML={formatResponse(message)} />
       </div>
     </div>
   );

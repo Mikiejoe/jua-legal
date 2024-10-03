@@ -79,9 +79,9 @@ function Mobile() {
   }, []);
 
   return (
-    <div className="h-screen relative">
+    <div className="h-[100vh] relative">
       {/* navbar */}
-      <div className="flex justify-between items-center bg-slate-400  px-2 py-4">
+      <div className="flex justify-between items-center bg-slate-400 h-[10vh] px-2 py-4">
         <h1 className="text-3xl font-medium text-gray-700 pl-4">Chats</h1>
         <div className="bg-slate-300 h-10 w-10 text-slate-400 border-[2px] border-white flex items-center justify-center rounded-full">
           <MdPerson size={48} />
@@ -90,7 +90,7 @@ function Mobile() {
       {/* End of navbar */}
 
       {/* List of conversations */}
-      <div className="px-2 pt-2 overflow-y-scroll h-[77vh]">
+      <div className="px-2 pt-2 overflow-y-scroll h-full">
         {chats.map((chat, n) => (
           <div
             onClick={() => {
@@ -121,7 +121,7 @@ function Mobile() {
       {/* end */}
 
       {/* bottom navigation bar */}
-      <div className="bg-slate-300 gap-2 justify-around px-4 py-2 w-full absolute bottom-0 flex right-0">
+      <div className="bg-slate-300 gap-2 justify-around px-4 h-[10vh] py-2 w-full absolute bottom-0 flex right-0">
         <div className="hover:bg-slate-400 hover:animate-pulse flex text-gray-700 items-center justify-center h-12 p-2 w-12 rounded-full">
           <MdChat size={28} />
         </div>
