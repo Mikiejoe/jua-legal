@@ -1,13 +1,14 @@
-import React, { useEffect, useState,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ChatCard from "./ChatCard";
 //
 
 import { BASE_URL } from "../../constants";
 
-function ChatScreen({ pk,count }) {
+function ChatScreen({ pk, count }) {
   const chatContainerRef = useRef(null);
   const [chats, setChats] = useState([]);
   const getChats = async () => {
+    console.log("pk ", pk);
     const token = localStorage.getItem("token");
     const devurl = `${BASE_URL}/api/v1/chats/${pk}/get_messages/`;
     try {
@@ -18,13 +19,13 @@ function ChatScreen({ pk,count }) {
           Authorization: `Token ${token}`,
         },
       });
-      console.log(res)
       if (res.ok) {
         const data = await res.json();
-        console.log("chats ",data);
+        console.log("chats ", data);
         setChats(data);
+        chatContainerRef.current.scrollIntoView({ behavior: "smooth" });
       } else {
-        setChats([])
+        setChats([]);
         console.log("Error getting chats!!");
       }
     } catch (error) {
@@ -34,19 +35,16 @@ function ChatScreen({ pk,count }) {
 
   useEffect(() => {
     getChats();
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }, [count]);
+    chatContainerRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [count, pk]);
   return (
-    <div ref={chatContainerRef} className="px-4 h-[80vh] md:h-[82.6vh] overflow-y-auto">
+    <div className="px-4 h-[80vh] md:h-[80vh] overflow-y-auto">
       <div className="p-2"></div>
 
       {chats.map((chat, index) => (
-        <ChatCard
-          key={index}
-          sender={chat.role}
-          message={chat.parts}
-        />
+        <ChatCard key={index} sender={chat.role} message={chat.parts} />
       ))}
+      <div ref={chatContainerRef}></div>
     </div>
   );
 }

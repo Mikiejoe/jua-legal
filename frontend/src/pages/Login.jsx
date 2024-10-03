@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../constants";
 
 function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [text, setText] = useState("SignUp");
+  const [loading, setloading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -25,9 +27,12 @@ function Login() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setloading(true);
+    setText("Signing in...");
     setError(null);
-    console.log('logging in')
+    console.log("logging in");
     const devurl = `${BASE_URL}/api/v1/users/login/`;
+    console.log(devurl);
     try {
       const res = await fetch(devurl, {
         method: "POST",
@@ -43,11 +48,11 @@ function Login() {
         setError(errorData.non_field_errors[0] || "An error occurred");
       } else {
         console.log("Login successful");
-        const data = await res.json()
-        console.log(data)
-        localStorage.setItem("token",data.key)
-        
-        window.location.reload()
+        const data = await res.json();
+        console.log(data);
+        localStorage.setItem("token", data.key);
+
+        window.location.reload();
       }
     } catch (error) {
       setError("Something went wrong!!!");
@@ -56,6 +61,8 @@ function Login() {
         username: "",
         password: "",
       });
+      setloading(false);
+      setText("Login");
     }
   };
 
@@ -91,9 +98,10 @@ function Login() {
         </div>
         <Button
           color="bg-slate-400"
-          text="Login"
+          text={text}
           textColor="slate-900"
           type="submit"
+          disabled={loading}
         />
         <p className="text-center text-slate-700 my-4">
           Don't have an account?{" "}

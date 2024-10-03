@@ -5,6 +5,8 @@ import { BASE_URL } from "../constants";
 
 function SignUp() {
   const navigate = useNavigate();
+  const [text,setText] = useState("SignUp")
+  const [loading, setloading] = useState(false)
   const [formError, setFormError] = useState({
     username: false,
     password1: false,
@@ -33,7 +35,8 @@ function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+setloading(true)
+setText("Signing Up...")
     // Validate email
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(formData.email)) {
@@ -42,6 +45,8 @@ function SignUp() {
         email: true,
       }));
       setError("Invalid email address");
+      setloading(false)
+      setText("SignUp")
       return;
     }
 
@@ -53,6 +58,8 @@ function SignUp() {
         password2: true,
       }));
       setError("Passwords do not match");
+      setloading(false)
+      setText("SignUp")
       return;
     }
 
@@ -76,6 +83,9 @@ function SignUp() {
       }
     } catch (error) {
       setError("An unexpected error occurred");
+    }finally{
+      setloading(false)
+      setText("SignUp")
     }
   };
 
@@ -131,8 +141,9 @@ function SignUp() {
         <Button
           color="bg-slate-400"
           type="submit"
-          text="SignUp"
+          text={text}
           textColor="slate-900"
+          disabled={loading}
         />
         <p className="text-center text-sm text-slate-700 my-4">
           Have an account?{" "}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Desktop, Mobile } from "../components";
+import {  Mobile,Desktop } from "../components";
 
 const Homepage = () => {
   return (
