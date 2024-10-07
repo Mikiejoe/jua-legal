@@ -9,7 +9,7 @@ import { BASE_URL } from "../constants";
 function ChatPage() {
   const [message, setMessage] = useState("");
   const location = useLocation();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const pk = location.pathname.split("/")[3];
   const [count, setCount] = useState(0);
   const [disabled, setDisabled] = useState(false);
@@ -69,21 +69,25 @@ function ChatPage() {
           message: message,
         }),
       });
+
       if (res.ok) {
-        setMessage("");
+        const data = await res.json();
+        console.log(data)
+        setChats([...chats, { role: "user", parts: message }, data]);
         setCount(count + 1);
       }
     } catch (error) {
       console.log("Something went wrong");
     } finally {
+      setMessage("");
       setDisabled(false);
     }
   };
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
-        navigate("/home",{
-          state:pk
+        navigate("/home", {
+          state: pk,
         }); // Navigate to /home if screen width is more than 768px
       }
     };
