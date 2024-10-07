@@ -206,7 +206,9 @@ function Desktop() {
           <div
             onClick={createChat}
             className={`hover:bg-slate-400 hover:animate-pulse flex items-center justify-center h-12 p-2 w-12 rounded-full ${
-              activeTab === "create-message" ? " text-gray-900" : " text-gray-600"
+              activeTab === "create-message"
+                ? " text-gray-900"
+                : " text-gray-600"
             }`}
           >
             <MdAddComment size={28} />
