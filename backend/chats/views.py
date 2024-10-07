@@ -38,6 +38,7 @@ class ChatViewSet(ModelViewSet):
         return Response(serializer.errors)
 
     def retrieve(self, request, *args, **kwargs):
+        print("request", request.user)
         chats = Chat.objects.filter(user=request.user.pk)
         serializer = ChatSerializer(chats)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -67,32 +68,21 @@ def send_message(request, pk):
             "chat": chat.id,
         }
 
-        user_serializer = ModelMessageSerializer(data=user_message)
-        if user_serializer.is_valid():
-            user_serializer.save()
-            all_messages = ModelMessage.objects.filter(chat=chat)
-            serialized_messages = ModelMessageSerializer1(all_messages, many=True)
-            model_response = converse(serialized_messages.data,message=message)
+        messages = ModelMessage.objects.filter(chat=pk)
+        serializer = ModelMessageSerializer1(messages, many=True)
+        model_response = converse(serializer.data,message=message)
+        model_message = {
+            "role": "model",
+            "parts": [model_response],
+            "chat": chat.id,
+        }
+        msg_data = [user_message, model_message]
+        msgs_serializer = ModelMessageSerializer(data=msg_data, many=True)
+        if msgs_serializer.is_valid():
+            msgs_serializer.save()
+            return Response(model_message, status=status.HTTP_201_CREATED)
 
-            model_message = {
-                "role": "model",
-                "parts": [model_response],
-                "chat": chat.id,
-            }
-
-            model_serializer = ModelMessageSerializer(data=model_message)
-            if model_serializer.is_valid():
-                model_serializer.save()
-                all_messages = ModelMessage.objects.filter(chat=chat)
-                serialized_messages = ModelMessageSerializer(all_messages, many=True)
-                return Response(
-                    status=status.HTTP_200_OK, data=serialized_messages.data
-                )
-            return Response(
-                status=status.HTTP_400_BAD_REQUEST, data=model_serializer.errors
-            )
-
-        return Response(status=status.HTTP_400_BAD_REQUEST, data=user_serializer.errors)
+        return Response(status=status.HTTP_400_BAD_REQUEST, data=msgs_serializer.errors)
 
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
