@@ -145,7 +145,7 @@ function Desktop() {
   };
 
   const sendMessage = async () => {
-    setMessages([...messages, { role: "user", parts: message }]);
+    
     setDisabled(true); // Disable the send button
 
     setMessage(""); // Clear the message after sending
@@ -153,7 +153,7 @@ function Desktop() {
       alert("Please enter a message");
       return;
     }
-
+    setMessages([...messages, { role: "user", parts: message }]);
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(`${BASE_URL}/api/v1/chat/${pk}/`, {
@@ -170,7 +170,7 @@ function Desktop() {
         setMessage("");
         setCount(count + 1);
         const data = await res.json();
-        setMessages(data)
+        setMessages([...messages, { role: "user", parts: message }, data]);
       }
     } catch (error) {
       console.log("Error sending message:", error);
