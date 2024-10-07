@@ -1,4 +1,4 @@
-const DEV = false;
+const DEV = true;
 export const DEV_URL = "http://localhost:8000";
 export const PROD_URL = "https://jua-legal.onrender.com";
 export const BASE_URL = DEV ? DEV_URL : PROD_URL;
