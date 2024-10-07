@@ -27,13 +27,13 @@ function Desktop() {
   const [disabled, setDisabled] = useState(false);
 
   const logout = () => {
-   const res = confirm("Are you sure you want to logout?");
+    const res = confirm("Are you sure you want to logout?");
     if (res) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       navigate("/login");
     }
-  }
+  };
 
   const token = localStorage.getItem("token");
 
@@ -126,7 +126,6 @@ function Desktop() {
   };
 
   const createChat = async () => {
-    
     const devurl = `${BASE_URL}/api/v1/chats/`;
     try {
       const res = await fetch(devurl, { method: "POST", headers });
@@ -145,7 +144,6 @@ function Desktop() {
   };
 
   const sendMessage = async () => {
-    
     setDisabled(true); // Disable the send button
 
     setMessage(""); // Clear the message after sending
@@ -188,9 +186,7 @@ function Desktop() {
   }, []);
 
   useEffect(() => {
-    if(location.state
-      && location.state
-    ){
+    if (location.state && location.state) {
       setPk(location.state);
     }
     getMessages();
@@ -210,7 +206,7 @@ function Desktop() {
           <div
             onClick={createChat}
             className={`hover:bg-slate-400 hover:animate-pulse flex items-center justify-center h-12 p-2 w-12 rounded-full ${
-              activeTab === "message" ? " text-gray-900" : " text-gray-600"
+              activeTab === "create-message" ? " text-gray-900" : " text-gray-600"
             }`}
           >
             <MdAddComment size={28} />
@@ -299,7 +295,7 @@ function Desktop() {
                   <div
                     key={index}
                     onClick={() => {
-                      if(pk ===chat.id) return;
+                      if (pk === chat.id) return;
                       setPk(chat.id);
                       getMessages(); // Check if the ID is correct
                     }}
@@ -325,7 +321,9 @@ function Desktop() {
                 Click a chat to start messaging
               </p>
             ) : loadingMessages ? (
-              <p className="px-4 h-[80vh] md:h-[80vh] flex items-center justify-center overflow-y-auto">Loading....</p>
+              <p className="px-4 h-[80vh] md:h-[80vh] flex items-center justify-center overflow-y-auto">
+                Loading....
+              </p>
             ) : (
               <div className="px-4 h-[80vh] md:h-[80vh] overflow-y-auto">
                 <div className="p-2"></div>
@@ -342,8 +340,7 @@ function Desktop() {
 
             {/* Chat Input */}
             {pk === null ? (
-              <p>
-              </p>
+              <p></p>
             ) : (
               <div className="bg-slate-200  flex h-[10vh] p-2 w-full px-6 bottom-0">
                 <div className="flex items-center border border-slate-300 h-full w-full rounded-l-lg overflow-hidden">
@@ -360,7 +357,9 @@ function Desktop() {
                 <button
                   disabled={disabled}
                   onClick={sendMessage}
-                  className="border border-slate-300 rounded-r-lg flex items-center justify-center px-4 h-full bg-slate-400 hover:bg-slate-600"
+                  className={`border ${
+                    disabled ? "cursor-wait" : "cursor-pointer"
+                  } border-slate-300 rounded-r-lg flex items-center justify-center px-4 h-full bg-slate-400 hover:bg-slate-600`}
                 >
                   <MdSend size={24} className="text-white" />
                 </button>
