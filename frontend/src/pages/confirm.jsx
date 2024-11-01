@@ -19,16 +19,16 @@ function confirm() {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
       }
     } catch (error) {
-      console.log("Something went wrong");
+      // console.log("Something went wrong");
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
+    // console.log(name, value);
     setCode(value);
   };
 

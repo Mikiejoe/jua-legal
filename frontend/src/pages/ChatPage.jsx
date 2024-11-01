@@ -35,10 +35,10 @@ function ChatPage() {
         chatContainerRef.current.scrollIntoView({ behavior: "smooth" });
       } else {
         setChats([]);
-        console.log("Error getting chats!!");
+        // console.log("Error getting chats!!");
       }
     } catch (error) {
-      console.log("Something went wrong");
+      // console.log("Something went wrong");
     }
   };
 
@@ -72,12 +72,12 @@ function ChatPage() {
 
       if (res.ok) {
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         setChats([...chats, { role: "user", parts: message }, data]);
         setCount(count + 1);
       }
     } catch (error) {
-      console.log("Something went wrong");
+      // console.log("Something went wrong");
     } finally {
       setMessage("");
       setDisabled(false);
@@ -103,7 +103,7 @@ function ChatPage() {
       window.removeEventListener("resize", handleResize);
     };
   }, [navigate]);
-  console.log(window.innerWidth);
+  // console.log(window.innerWidth);
   return (
     <div className="col-span-2 bg-slate-300 relative w-full h-[100vh]">
       <div className="flex space-x-4 items-center h-[10vh] p-2 shadow-md shadow-slate-100 bg-slate-200">

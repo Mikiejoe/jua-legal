@@ -78,7 +78,7 @@ setText("Signing Up...")
         const errorData = await res.json();
         setError(errorData.message || "An error occurred");
       } else {
-        console.log("Registration successful");
+        // console.log("Registration successful");
         navigate("/login");
       }
     } catch (error) {

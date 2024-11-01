@@ -8,7 +8,7 @@ function ChatScreen({ pk, count }) {
   const chatContainerRef = useRef(null);
   const [chats, setChats] = useState([]);
   const getChats = async () => {
-    console.log("pk ", pk);
+    // console.log("pk ", pk);
     const token = localStorage.getItem("token");
     const devurl = `${BASE_URL}/api/v1/chats/${pk}/get_messages/`;
     try {
@@ -21,15 +21,15 @@ function ChatScreen({ pk, count }) {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log("chats ", data);
+        // console.log("chats ", data);
         setChats(data);
         chatContainerRef.current.scrollIntoView({ behavior: "smooth" });
       } else {
         setChats([]);
-        console.log("Error getting chats!!");
+        // console.log("Error getting chats!!");
       }
     } catch (error) {
-      console.log("Something went wrong");
+      // console.log("Something went wrong");
     }
   };
 

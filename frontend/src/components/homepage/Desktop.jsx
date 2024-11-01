@@ -65,10 +65,10 @@ function Desktop() {
         setMessages(data);
       } else {
         setChats([]);
-        console.log("Error getting chats!!");
+        // console.log("Error getting chats!!");
       }
     } catch (error) {
-      console.log("Something went wrong");
+      // console.log("Something went wrong");
     } finally {
       setLoadingMessages(false);
     }
@@ -88,7 +88,7 @@ function Desktop() {
         window.location.href = "/login";
       }
     } catch (error) {
-      console.log("Error fetching user data:", error);
+      // console.log("Error fetching user data:", error);
     }
   };
 
@@ -116,10 +116,10 @@ function Desktop() {
         localStorage.removeItem("token");
         window.location.href = "/login";
       } else {
-        console.log("Error getting chats");
+        // console.log("Error getting chats");
       }
     } catch (error) {
-      console.log("Error fetching chats:", error);
+      // console.log("Error fetching chats:", error);
     } finally {
       setLoading(false);
     }
@@ -135,7 +135,7 @@ function Desktop() {
         getChats(); // Refetch chats after creating one
       }
     } catch (error) {
-      console.log("Error creating chat:", error);
+      // console.log("Error creating chat:", error);
     }
   };
 
@@ -171,7 +171,7 @@ function Desktop() {
         setMessages([...messages, { role: "user", parts: message }, data]);
       }
     } catch (error) {
-      console.log("Error sending message:", error);
+      // console.log("Error sending message:", error);
     } finally {
       setDisabled(false);
     }

@@ -19,7 +19,7 @@ function Login() {
   document.title = "Jua Legal - SignIn";
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
+    // console.log(name, value);
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -30,9 +30,9 @@ function Login() {
     setloading(true);
     setText("Signing in...");
     setError(null);
-    console.log("logging in");
+    // console.log("logging in");
     const devurl = `${BASE_URL}/api/v1/users/login/`;
-    console.log(devurl);
+    // console.log(devurl);
     try {
       const res = await fetch(devurl, {
         method: "POST",
@@ -41,15 +41,15 @@ function Login() {
         },
         body: JSON.stringify(formData),
       });
-      console.log(res);
+      // console.log(res);
       if (!res.ok) {
         const errorData = await res.json();
-        console.log(errorData);
+        // console.log(errorData);
         setError(errorData.non_field_errors[0] || "An error occurred");
       } else {
-        console.log("Login successful");
+        // console.log("Login successful");
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         localStorage.setItem("token", data.key);
 
         window.location.reload();

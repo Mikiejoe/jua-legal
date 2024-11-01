@@ -60,10 +60,10 @@ function Mobile() {
       if (res.ok) {
         const data = await res.json();
         changeScreen(data.id);
-        console.log(data);
+        // console.log(data);
       }
     } catch (error) {
-      console.log("Something went wrong");
+      // console.log("Something went wrong");
     }
   };
   const getChats = async () => {
@@ -86,10 +86,10 @@ function Mobile() {
           setChats(data);
         }
       } else {
-        console.log("Error getting chats!!");
+        // console.log("Error getting chats!!");
       }
     } catch (error) {
-      console.log("Something went wrong");
+      // console.log("Something went wrong");
     } finally {
       setLoading(false);
     }
