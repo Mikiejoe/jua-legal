@@ -19,7 +19,7 @@ generation_config = {
 }
 
 model = genai.GenerativeModel(
-    model_name="gemini-1.5-pro-exp-0827",
+    model_name="gemini-2.0-flash",
     generation_config=generation_config,
     system_instruction=f"""
   You are an AI legal assistant designed to assist users
