@@ -5,7 +5,7 @@ import { BASE_URL } from "../constants";
 
 function Login() {
   const navigate = useNavigate();
-  const [text, setText] = useState("SignUp");
+  const [text, setText] = useState("Sign In");
   const [loading, setloading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
