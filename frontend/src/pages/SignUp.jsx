@@ -22,7 +22,7 @@ function SignUp() {
   });
 
   const [error, setError] = useState(null);
-  const devurl = `${BASE_URL}/api/v1/users/auth/register/`;
+  const devurl = `${BASE_URL}/api/v1/users/register/`;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
